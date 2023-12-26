@@ -20,7 +20,7 @@ const contactSchema = Yup.object().shape({
     .required('Required'),
 });
 
-export const ContactForm = ({ updateContact }) => {
+const ContactForm = ({ updateContact }) => {
   return (
     <div>
       <Formik
@@ -53,3 +53,4 @@ export const ContactForm = ({ updateContact }) => {
     </div>
   );
 };
+export default ContactForm;

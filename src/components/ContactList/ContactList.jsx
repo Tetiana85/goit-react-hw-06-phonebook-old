@@ -4,7 +4,7 @@ import {
   ListItem,
   List,
 } from './ContactList.styled';
-export const ContactList = ({ items, onDelete }) => {
+const ContactList = ({ items, onDelete }) => {
   return (
     <List>
       {items.map(({ id, name, number }) => {
@@ -20,3 +20,5 @@ export const ContactList = ({ items, onDelete }) => {
     </List>
   );
 };
+
+export default ContactList;

@@ -1,6 +1,6 @@
 import { FilterInput } from './Filter.styled';
 
-export const Filter = ({ filter, onUpdateFilter }) => {
+const Filter = ({ filter, onUpdateFilter }) => {
   return (
     <>
       <p>Find contacts by name</p>
@@ -14,3 +14,5 @@ export const Filter = ({ filter, onUpdateFilter }) => {
     </>
   );
 };
+
+export default Filter;

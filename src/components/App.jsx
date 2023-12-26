@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
 import { Container } from './App.styled';
 import { GlobalStyle } from './GlobalStyle';
-import { ContactForm } from './ContactForm/ContactForm';
-import { Filter } from './Filter/Filter';
-import { ContactList } from './ContactList/ContactList';
+import ContactForm from './ContactForm/ContactForm';
+import Filter from './Filter/Filter';
+import ContactList from './ContactList/ContactList';
 import initialContacts from '../contacts.json';
 
-export const App = () => {
+const App = () => {
   const [contacts, setContacts] = useState([]);
   const [filter, setFilter] = useState('');
 
@@ -71,3 +71,5 @@ export const App = () => {
     </Container>
   );
 };
+
+export default App;
