@@ -37,13 +37,13 @@ const ContactForm = ({ updateContact }) => {
         <Form>
           <StyledLabel htmlFor="name">
             Name:
-            <Field name="name" />
+            <Field id="name" name="name" autoComplete="name" />
             <ErrorMessage name="name" component="span" />
           </StyledLabel>
 
           <StyledLabel htmlFor="number">
             Number:
-            <Field name="number" type="tel" />
+            <Field id="number" name="number" type="tel" autoComplete="tel" />
             <ErrorMessage name="number" component="span" />
           </StyledLabel>
 

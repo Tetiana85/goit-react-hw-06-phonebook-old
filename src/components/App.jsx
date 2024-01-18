@@ -1,42 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import { nanoid } from 'nanoid';
+import React from 'react';
 import { Container } from './App.styled';
 import { GlobalStyle } from './GlobalStyle';
 import ContactForm from './ContactForm/ContactForm';
 import Filter from './Filter/Filter';
 import ContactList from './ContactList/ContactList';
-import initialContacts from '../contacts.json';
+import { useDispatch, useSelector } from 'react-redux';
+import { setFilter, addContact, removeContact } from '../redux/contactSlice';
+import { nanoid } from 'nanoid';
 
 const App = () => {
-  const [contacts, setContacts] = useState([]);
-  const [filter, setFilter] = useState('');
-
-  useEffect(() => {
-    const storedContacts = localStorage.getItem('contacts');
-    const parsedContacts = JSON.parse(storedContacts);
-
-    if (parsedContacts) {
-      setContacts(parsedContacts);
-    } else {
-      setContacts(initialContacts);
-      localStorage.setItem('contacts', JSON.stringify(initialContacts));
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
+  const dispatch = useDispatch();
+  const contacts = useSelector(store => store.contactsSlice.contacts);
+  const filter = useSelector(store => store.contactsSlice.filter);
 
   const handleFilter = evt => {
-    setFilter(evt.target.value);
+    const value = evt.target.value;
+    dispatch(setFilter(value));
   };
 
   const deleteContact = contactId => {
-    const updatedContacts = contacts.filter(item => item.id !== contactId);
-    setContacts(updatedContacts);
+    dispatch(removeContact(contactId));
   };
 
-  const addContact = newContact => {
+  const handleAddContact = newContact => {
     const checkContact = contacts.find(
       contact => contact.name.toLowerCase() === newContact.name.toLowerCase()
     );
@@ -47,21 +33,17 @@ const App = () => {
     }
 
     const contact = { ...newContact, id: nanoid() };
-    setContacts([...contacts, contact]);
+    dispatch(addContact(contact));
   };
 
-  const filteredList = () => {
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(filter.toLowerCase())
-    );
-  };
-
-  const filteredContacts = filteredList();
+  const filteredContacts = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
   return (
     <Container>
       <h1>Phonebook</h1>
-      <ContactForm updateContact={addContact} />
+      <ContactForm updateContact={handleAddContact} />
       <h2>Contacts</h2>
       <Filter filter={filter} onUpdateFilter={handleFilter} />
       {filteredContacts.length > 0 && (
